@@ -1,27 +1,356 @@
-# EmployeeManagementUI
+# Employee Management System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+A role-based Employee Management System developed using ASP.NET Core Web API, Angular, and Microsoft SQL Server.
 
-## Development server
+The application provides secure authentication, employee management, JWT-based authorization, and role-based access control for Admin and Employee users.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 1. Technologies Used
 
-## Code scaffolding
+### Backend
+- ASP.NET Core Web API (.NET 8)
+- Entity Framework Core
+- C#
+- JWT Authentication
+- ASP.NET Core Identity PasswordHasher
+- Swagger / OpenAPI
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Frontend
+- Angular 17
+- TypeScript
+- HTML5
+- CSS3
+- Angular Router
+- HTTP Interceptors
 
-## Build
+### Database
+- Microsoft SQL Server / SQL Server Express
+- SQL Server Management Studio (SSMS)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Development Tools
+- Visual Studio 2022
+- Visual Studio Code
+- Swagger
+- Git and GitHub
 
-## Running unit tests
+## 2. Features
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Admin Features
+- Secure login using email and password.
+- Create employee accounts with name, email, and initial password.
+- View the list of employees.
+- View individual employee profiles.
+- Update employee information.
+- Deactivate and reactivate employee accounts.
+- Permanently delete employee accounts.
 
-## Running end-to-end tests
+### Employee Features
+- Log in using credentials provided by the Admin.
+- View their own profile.
+- Cannot view another employee's profile.
+- Cannot create or manage employee accounts.
+- Cannot access Admin-only functionality.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### Security Features
+- JWT-based authentication.
+- Passwords stored as hashes instead of plaintext.
+- Role-based authorization for Admin and Employee.
+- Protected API endpoints.
+- Employees can access only their own profiles.
+- Invalid credentials are rejected.
+- Requests without a valid authentication token are rejected.
 
-## Further help
+## 3. Project Structure
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```text
+EmployeeManagementUI/
+│
+├── EmployeeManagementAPI/
+│   ├── Controllers/
+│   │   ├── AuthController.cs
+│   │   └── EmployeesController.cs
+│   ├── Data/
+│   │   └── ApplicationDbContext.cs
+│   ├── DTOs/
+│   ├── Models/
+│   │   └── User.cs
+│   ├── Properties/
+│   ├── Services/
+│   │   ├── AuthService.cs
+│   │   ├── EmployeeService.cs
+│   │   ├── JwtService.cs
+│   │   └── PasswordService.cs
+│   ├── Program.cs
+│   ├── appsettings.json
+│   └── EmployeeManagementAPI.csproj
+│
+├── Database/
+│   └── setup.sql
+│
+├── src/
+│   ├── app/
+│   └── environments/
+│
+├── angular.json
+├── package.json
+├── tsconfig.json
+└── README.md
+```
+
+## 4. Prerequisites
+
+Install the following software before running the application:
+
+- .NET 8 SDK
+- Node.js and npm
+- Angular CLI 17
+- Microsoft SQL Server or SQL Server Express
+- SQL Server Management Studio (SSMS)
+- Visual Studio 2022 or Visual Studio Code
+- Git
+
+## 5. Database Setup
+
+The application uses a SQL Server database named:
+
+`EmployeeManagementDB`
+
+### Step 1: Create the Database
+
+1. Open SQL Server Management Studio.
+2. Connect to your SQL Server instance.
+3. Open the file `Database/setup.sql`.
+4. Execute the script.
+
+The script creates the database and the `dbo.Users` table if they do not already exist.
+
+### Step 2: Configure the Connection String
+
+Open:
+
+`EmployeeManagementAPI/appsettings.json`
+
+Update the connection string to match your SQL Server instance.
+
+Example:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER_NAME;Database=EmployeeManagementDB;Trusted_Connection=True;TrustServerCertificate=True;"
+  }
+}
+```
+
+Replace `YOUR_SERVER_NAME` with your actual SQL Server instance name.
+
+Keep the connection-string key consistent with the key used in `Program.cs`.
+
+### Step 3: Configure JWT Authentication
+
+Configure the JWT signing key using .NET User Secrets or an environment variable.
+
+Do not commit actual production secrets to GitHub.
+
+The JWT issuer and audience must match the values configured in `appsettings.json` and the authentication setup in `Program.cs`.
+
+### Step 4: Initialize the Admin Account
+
+The database setup script creates the database and table. It does not automatically create the initial Admin account.
+
+Create the initial Admin record using a password hash generated by the application's `PasswordService`, which uses ASP.NET Core Identity's `PasswordHasher<User>`.
+
+The initial account must have:
+- A valid name.
+- A unique email address.
+- A password hash generated by the application's password-hashing implementation.
+- The role `Admin`.
+- An active account status.
+
+Do not insert a plaintext password into the `PasswordHash` column.
+
+After creating the initial Admin account, log in through the application's login endpoint.
+
+The Admin can then create Employee accounts through the application.
+
+## 6. Backend Setup
+
+Open a terminal in the repository root.
+
+Navigate to the backend directory:
+
+```powershell
+cd EmployeeManagementAPI
+```
+
+Restore the dependencies:
+
+```powershell
+dotnet restore
+```
+
+Build the application:
+
+```powershell
+dotnet build
+```
+
+Run the API:
+
+```powershell
+dotnet run
+```
+
+The API will start using the launch settings and configuration available in the project.
+
+### Swagger
+
+Open the HTTPS Swagger URL displayed in the terminal.
+
+For the local development configuration, the URL may be:
+
+`https://localhost:7221/swagger/index.html`
+
+Use Swagger to test the authentication and employee-management endpoints.
+
+## 7. Frontend Setup
+
+Open a separate terminal in the repository root.
+
+Install the frontend dependencies:
+
+```powershell
+npm install
+```
+
+Start the Angular development server:
+
+```powershell
+npx ng serve
+```
+
+Open the application in your browser:
+
+`http://localhost:4200`
+
+Ensure the backend API is running before testing login and employee-management functionality.
+
+### Configure the API URL
+
+Open:
+
+`src/environments/environment.ts`
+
+Make sure the API URL matches the URL where the backend is running.
+
+Example:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'https://localhost:7221/api'
+};
+```
+
+If the backend uses a different URL or port, update the configuration accordingly.
+
+## 8. API Endpoints
+
+Base URL:
+
+`https://localhost:7221/api`
+
+### Authentication
+
+| HTTP Method | Endpoint | Description | Access |
+|---|---|---|---|
+| POST | `/Auth/login` | Authenticate a user and obtain a JWT | Public |
+
+### Employee Management
+
+| HTTP Method | Endpoint | Description | Access |
+|---|---|---|---|
+| GET | `/Employees` | Retrieve the employee list | Admin |
+| GET | `/Employees/{id}` | Retrieve an employee profile | Admin or the same employee |
+| POST | `/Employees` | Create an employee account | Admin |
+| PUT | `/Employees/{id}` | Update employee information | Admin |
+| DELETE | `/Employees/{id}` | Deactivate an employee account | Admin |
+| DELETE | `/Employees/hard-delete/{id}` | Permanently delete an employee account | Admin |
+
+Protected endpoints require a valid JWT access token.
+
+In Swagger, click **Authorize** and provide the token according to the Swagger authentication configuration.
+
+## 9. Authentication and Authorization
+
+### Login Process
+
+1. The user submits an email address and password.
+2. The backend retrieves the account using the email address.
+3. The backend verifies the password against the stored password hash.
+4. If the credentials are valid and the account is active, the API generates a JWT.
+5. The frontend stores the authentication information and uses the token for protected API requests.
+6. The backend validates the token and checks the user's role and permissions.
+
+### Role-Based Access
+
+**Admin**
+- Can create employee accounts.
+- Can view the employee list.
+- Can view employee profiles.
+- Can update and delete employee accounts.
+
+**Employee**
+- Can view their own profile.
+- Cannot access other employees' profiles.
+- Cannot perform Admin-only operations.
+
+## 10. Testing
+
+The application can be tested through Swagger or Postman, as well as through the Angular interface.
+
+Recommended test cases:
+
+| Test Case | Expected Result |
+|---|---|
+| Login with valid Admin credentials | Successful login |
+| Login with an incorrect password | HTTP 401 Unauthorized |
+| Admin creates an employee | Successful creation |
+| Admin retrieves the employee list | HTTP 200 OK |
+| Employee retrieves their own profile | HTTP 200 OK |
+| Employee retrieves another employee's profile | HTTP 403 Forbidden |
+| Employee attempts to create an employee | HTTP 403 Forbidden |
+| Employee attempts to retrieve the employee list | HTTP 403 Forbidden |
+| Request to a protected endpoint without a token | HTTP 401 Unauthorized |
+| Request with an invalid token | HTTP 401 Unauthorized |
+| Employee attempts to update an employee account | HTTP 403 Forbidden |
+
+## 11. Sample Credentials
+
+Use the demo credentials configured in the database.
+
+| Role | Email | Password |
+|---|---|---|
+| Admin | Configure the initial Admin account | Use its configured password |
+| Employee | Create through the Admin account | Use the initial password assigned by Admin |
+
+The database setup script does not seed these accounts automatically. Create the initial Admin account before attempting to log in.
+
+For testing, create at least two Employee accounts through the Admin interface.
+
+Use demo credentials only for assignment evaluation. Never use demo passwords in production.
+
+## 12. Important Notes
+
+- The SQL script creates the database and table; it does not seed user accounts.
+- Update the SQL Server connection string before running the backend on another machine.
+- Configure the JWT signing key securely.
+- Keep the frontend API URL synchronized with the backend URL.
+- The backend and frontend must both be running for the complete application to work.
+- Employee access is restricted through backend authorization, not only through frontend navigation.
+- Demo credentials should not be used in a production environment.
+
+## 13. Author
+
+Developed as an Employee Management System practical assignment.
+
+Technologies: ASP.NET Core Web API, Angular, and Microsoft SQL Server.
