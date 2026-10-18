@@ -1,0 +1,234 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(45, 212, 191, 0.16), transparent 32%),
+    radial-gradient(circle at 88% 85%, rgba(13, 148, 136, 0.13), transparent 30%),
+    linear-gradient(135deg, #f0fdfa 0%, #f8fafc 55%, #ecfeff 100%);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 40px;
+  border: 1px solid rgba(153, 246, 228, 0.65);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 24px 60px rgba(15, 118, 110, 0.09),
+    0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.brand-section {
+  margin-bottom: 34px;
+  text-align: center;
+}
+
+.brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 17px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.2);
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.brand-section h1 {
+  margin: 0;
+  color: #134e4a;
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -0.6px;
+}
+
+.brand-section p {
+  margin: 9px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.welcome-section {
+  margin-bottom: 27px;
+}
+
+.welcome-section h2 {
+  margin: 0 0 8px;
+  color: #134e4a;
+  font-size: 23px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.welcome-section p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 21px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 9px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.form-group input {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1px solid #cbdedb;
+  border-radius: 10px;
+  outline: none;
+  background: #ffffff;
+  color: #134e4a;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+.form-group input:focus {
+  border-color: #0f766e;
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.11);
+}
+
+.form-group input.ng-invalid.ng-touched {
+  border-color: #ef4444;
+}
+
+.validation-message {
+  display: block;
+  margin-top: 7px;
+  color: #dc2626;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.error-message {
+  margin-bottom: 18px;
+  padding: 13px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 49px;
+  margin-top: 7px;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0f766e, #0d9488);
+  box-shadow: 0 5px 12px rgba(15, 118, 110, 0.15);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #115e59, #0f766e);
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.23);
+  transform: translateY(-1px);
+}
+
+.login-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.login-button:focus-visible {
+  outline: 3px solid rgba(20, 184, 166, 0.35);
+  outline-offset: 3px;
+}
+
+.login-footer {
+  margin-top: 29px;
+  padding-top: 19px;
+  border-top: 1px solid #e5f3f0;
+  text-align: center;
+}
+
+.login-footer p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    padding: 18px 14px;
+  }
+
+  .login-card {
+    padding: 30px 23px;
+    border-radius: 16px;
+  }
+
+  .brand-section {
+    margin-bottom: 29px;
+  }
+
+  .brand-section h1 {
+    font-size: 23px;
+  }
+
+  .welcome-section h2 {
+    font-size: 21px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
